@@ -178,13 +178,25 @@ return false;
 				<th>Dic (Rs.)</th>
                 <th>Price (Rs.)</th>
               </tr>
-				 <?php $total=0;
+				 <?php $total=0; $style="";
                 $result = $db->prepare("SELECT * FROM sales_list WHERE invoice_no = '$invo' ");
 		$result->bindParam(':userid', $res);
 		$result->execute();
 		for($i=0; $row = $result->fetch(); $i++){
+			$pro_id=$row['product_id'];
+
+$resultz = $db->prepare("SELECT * FROM product WHERE product_id = '$pro_id' ");
+$resultz->bindParam(':userid', $res);
+$resultz->execute();
+for($i=0; $rowz = $resultz->fetch(); $i++){
+$stock=$rowz['qty'];
+}
+if ($stock < 0) {
+$style='style="color:red" ';
+}
+
 	?>
-				 <tr style="color:red" >
+				 <tr <?php echo $style; ?> >
 				     <td><?php echo $row['name']; ?></td>
 					 <td><?php echo $row['qty']; ?></td>
 					 <td><?php echo $row['dic']; ?></td>
