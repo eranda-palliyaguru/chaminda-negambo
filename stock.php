@@ -166,6 +166,9 @@ $style="";
 $qty=$row['qty'];
 $re=$row['re_order'];
 if ($qty < $re) {
+$style='style="color:green" ';
+}
+if ($qty < 0) {
 $style='style="color:red" ';
 }
 			?>
