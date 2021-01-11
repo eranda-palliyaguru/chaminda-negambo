@@ -35,7 +35,7 @@ $sec = "1";
 
             <div class="box-body">
 
-    <table id="example1" class="table table-bordered table-striped">
+							<table id="example1" class="table table-bordered table-striped">
 
                 <thead>
                 <tr>
@@ -51,7 +51,7 @@ $sec = "1";
                   <th>Part Price</th>
 
 				  <th>Amount</th>
-
+                
                 </tr>
 
                 </thead>
@@ -82,10 +82,13 @@ $sec = "1";
                   <td><?php echo $row['amount']-$row['labor_cost'];?></td>
                   <td><?php echo $row['amount'];?></td>
 
+
+
 				   <?php
 					$tot+=$row['amount'];
 					$labor+=$row['amount']-$row['labor_cost'];
 				}
+
 				?>
                 </tr>
 
@@ -105,9 +108,8 @@ $sec = "1";
                   <th><?php echo $tot-$labor; ?>.00</th>
 				  <th><?php echo $labor; ?>.00</th>
 				  <th><?php echo $tot; ?>.00</th>
-
+                  <th></th>
                 </tr>
-
 
 				<?php
 					$hold=0;
@@ -118,7 +120,7 @@ $sec = "1";
 				$ex=$row['sum(amount)'];
 				}
 
-					$result = $db->prepare("SELECT sum(amount) FROM sales WHERE pay_type='Card' and action='active' and date BETWEEN '$d1' AND '$d2'  ");
+			$result = $db->prepare("SELECT sum(amount) FROM sales WHERE pay_type='Card' and action='active' and date BETWEEN '$d1' AND '$d2'  ");
 				$result->bindParam(':userid', $date);
                 $result->execute();
                 for($i=0; $row = $result->fetch(); $i++){
@@ -135,15 +137,15 @@ $sec = "1";
 			$card_tot=$card_tot2+$card_tot1;
 
 
-			$result = $db->prepare("SELECT sum(advance) FROM sales WHERE action='active' and date BETWEEN '$d1' AND '$d2'  ");
-					$result->bindParam(':userid', $date);
-	                $result->execute();
-	                for($i=0; $row = $result->fetch(); $i++){
-					$advance_x=$row['sum(advance)'];
-					}
 
+		$result = $db->prepare("SELECT sum(advance) FROM sales WHERE action='active' and date BETWEEN '$d1' AND '$d2'  ");
+				$result->bindParam(':userid', $date);
+                $result->execute();
+                for($i=0; $row = $result->fetch(); $i++){
+				$advance_x=$row['sum(advance)'];
+				}
 
-		$result = $db->prepare("SELECT sum(advance) FROM sales WHERE  date BETWEEN '$d1' AND '$d2'  ");
+		$result = $db->prepare("SELECT sum(advance) FROM sales WHERE  advance_date BETWEEN '$d1' AND '$d2'  ");
 				$result->bindParam(':userid', $date);
                 $result->execute();
                 for($i=0; $row = $result->fetch(); $i++){
